@@ -1,2 +1,3 @@
-# github-cli-utils
+# cicd-cli-tools
+
 CLI tools for CI/CD
