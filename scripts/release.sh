@@ -9,7 +9,7 @@ if [ $? -eq 0 ]; then
   cp README.md dist
   node dist/copy-package-file.js dist devDependencies scripts
   node dist/create-github-release.js $repo $version && echo "Release \"$version\" created on \"$repo\""
-  npm publish dist && "\"$name@$version\" has been successfully published on NPM"
+  npm publish dist && echo "\"$name@$version\" has been successfully published on NPM"
 else
   echo "No need to publish package."
 fi
