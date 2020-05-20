@@ -8,6 +8,7 @@ jest.mock('child_process');
 describe('version-has-changed', () => {
   describe('#versionHasCHanged', () => {
     jest.doMock(path.resolve('./package.json'), () => ({ version: '0.0.1' }), { virtual: true });
+    jest.doMock(path.resolve('./lerna.json'), () => ({ version: '0.0.2' }), { virtual: true });
 
     const execMock: jest.Mock = (exec as unknown) as jest.Mock;
     let exitSpy: jest.SpyInstance;
@@ -29,7 +30,7 @@ describe('version-has-changed', () => {
 
     it('should exit successfully if the version has change', async () => {
       execMock.mockImplementationOnce((_cmd, callback: Function) => {
-        callback(null, { stdout: JSON.stringify({ version: '0.0.2' }) });
+        callback(null, { stdout: JSON.stringify({ version: '0.0.0' }) });
       });
 
       await versionHasChanged();
@@ -57,6 +58,19 @@ describe('version-has-changed', () => {
 
       expect(execMock).toHaveBeenCalledWith('git show HEAD~1:package.json', expect.any(Function));
       expect(exitSpy).toHaveBeenNthCalledWith(1, 1);
+    });
+
+    it('should accept an optional parameter allowing to define in what file it should look to the version number', async () => {
+      process.argv[2] = 'lerna.json';
+
+      execMock.mockImplementationOnce((_cmd, callback: Function) => {
+        callback(null, { stdout: JSON.stringify({ version: '0.0.1' }) });
+      });
+
+      await versionHasChanged();
+
+      expect(execMock).toHaveBeenCalledWith('git show HEAD~1:lerna.json', expect.any(Function));
+      expect(exitSpy).toHaveBeenNthCalledWith(1, 0);
     });
   });
 });
