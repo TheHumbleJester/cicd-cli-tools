@@ -15,6 +15,14 @@ describe('package-property', () => {
       { virtual: true },
     );
 
+    jest.doMock(
+      path.resolve('./lerna.json'),
+      () => ({
+        version: '0.0.42',
+      }),
+      { virtual: true },
+    );
+
     let exitSpy: jest.SpyInstance;
     let writeSpy: jest.SpyInstance;
     beforeAll(() => {
@@ -73,6 +81,15 @@ describe('package-property', () => {
       getPackageProperty();
 
       expect(writeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should allow to read property from a specific filename', () => {
+      process.argv[2] = 'version';
+      process.argv[3] = 'lerna.json';
+
+      getPackageProperty();
+
+      expect(writeSpy).toHaveBeenCalledWith('0.0.42');
     });
   });
 });

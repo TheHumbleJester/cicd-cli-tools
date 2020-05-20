@@ -1,6 +1,6 @@
 {
   "name": "cicd-cli-tools",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "CLI tools for CI/CD",
   "repository": "git@github.com:TheHumbleJester/cicd-cli-tools.git",
   "author": "The Humble Jester <the.humble.jester@gmail.com>",
