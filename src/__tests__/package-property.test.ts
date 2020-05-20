@@ -2,8 +2,8 @@ import path from 'path';
 
 import { getPackageProperty } from '../package-property';
 
-describe('version-has-changed', () => {
-  describe('#versionHasCHanged', () => {
+describe('package-property', () => {
+  describe('#packageProperty', () => {
     jest.doMock(
       path.resolve('./package.json'),
       () => ({

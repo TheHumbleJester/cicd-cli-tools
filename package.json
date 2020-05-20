@@ -1,6 +1,6 @@
 {
   "name": "cicd-cli-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI tools for CI/CD",
   "repository": "git@github.com:TheHumbleJester/cicd-cli-tools.git",
   "author": "The Humble Jester <the.humble.jester@gmail.com>",
@@ -17,7 +17,8 @@
     "copy-package-file": "copy-package-file.js",
     "create-github-release": "create-github-release.js",
     "package-property": "package-property.js",
-    "version-has-changed": "version-has-changed.js"
+    "version-has-changed": "version-has-changed.js",
+    "set-package-value": "set-package-value.js"
   },
   "devDependencies": {
     "@types/jest": "^25.2.2",
