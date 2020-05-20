@@ -2,8 +2,8 @@ import github from 'octonode';
 
 import { createGithubRelease } from '../create-github-release';
 
-describe('version-has-changed', () => {
-  describe('#versionHasCHanged', () => {
+describe('create-github-release', () => {
+  describe('#createGithubRelease', () => {
     const clientSpy = jest.spyOn(github, 'client');
     const repoMock = jest.fn();
     const releaseMock = jest.fn();

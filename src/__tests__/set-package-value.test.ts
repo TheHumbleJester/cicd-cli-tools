@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-import { copyPackageFile } from '../copy-package-file';
+import { setPackageValue } from '../set-package-value';
 
 jest.mock('fs', () => {
   const actualFs: any = jest.requireActual('fs');
@@ -12,8 +12,8 @@ jest.mock('fs', () => {
   };
 });
 
-describe('copy-package-file', () => {
-  describe('#copyPackageFile', () => {
+describe('set-package-value', () => {
+  describe('#setPackageValue', () => {
     jest.doMock(
       path.resolve('./package.json'),
       () => ({
@@ -21,12 +21,8 @@ describe('copy-package-file', () => {
         version: '0.0.1',
         devDependencies: {
           dep1: 'version1',
-          dep2: 'version1',
-          dep3: 'version1',
-        },
-        scripts: {
-          script1: 'cmd1',
-          script2: 'cmd2',
+          dep2: 'version2',
+          dep3: 'version3',
         },
       }),
       { virtual: true },
@@ -48,19 +44,21 @@ describe('copy-package-file', () => {
       jest.restoreAllMocks();
     });
 
-    it('should copy the package.json file in the given directory by omitting given properties', async () => {
-      process.argv = ['', '', './dist', 'devDependencies', 'scripts.script1'];
+    it('it should allow to update package.json value', async () => {
+      process.argv = ['', '', 'devDependencies.dep2', '42'];
 
-      await copyPackageFile();
+      await setPackageValue();
 
       expect(writeFileSpy).toHaveBeenCalledWith(
-        path.resolve('./dist/package.json'),
+        path.resolve('./package.json'),
         JSON.stringify(
           {
             name: 'test',
             version: '0.0.1',
-            scripts: {
-              script2: 'cmd2',
+            devDependencies: {
+              dep1: 'version1',
+              dep2: '42',
+              dep3: 'version3',
             },
           },
           null,
